@@ -1,28 +1,36 @@
-The Servo Book
-==============
+Servo-kirja
+===========
 
-**<https://book.servo.org>**
+Epävirallinen suomenkielinen käännös [The Servo Book](https://book.servo.org) -teoksesta.
 
-To render the book locally:
+**<https://book.servo.org>** (englanninkielinen alkuperä)
+
+## Suomenkielisen version rakentaminen
 
 ```sh
 $ cargo install mdbook --vers '^0.5' --locked
 $ cargo install mdbook-mermaid --vers '^0.17' --locked
+$ cp book-fi.toml book.toml && mdbook build -d book-fi && git checkout book.toml
+```
+
+Tai Nixillä:
+
+```sh
+$ nix-shell --run 'cp book-fi.toml book.toml && mdbook build -d book-fi'
+```
+
+## Englanninkielinen versio
+
+```sh
 $ mdbook serve --open
 ```
 
-Or if you have [Nix](https://nixos.org/download/) (the package manager):
+**Kirja on työn alla!**
+Sisällysluettelossa \* merkitsee lukuja, jotka on äskettäin lisätty tai tuotu vanhemmasta dokumentaatiosta ja jotka tarvitsevat vielä oikoluvun tai uudelleentyöstön.
 
-```sh
-$ nix-shell --run 'mdbook serve --open'
-```
+Katso [TRANSLATION_STATUS.md](TRANSLATION_STATUS.md) käännöksen tilasta.
 
-**This book is a work in progress!**
-In the table of contents, \* denotes chapters that were recently added or imported from older docs, and still need to be copyedited or reworked.
+### Uuden sivun lisääminen
 
-### Adding a new page
-
-To add a new page to the book:
-
-1. Create the new markdown page in the desired subdirectory of `src/`
-2. Add a new link to [SUMMARY.md](https://github.com/servo/book/blob/main/src/SUMMARY.md) with the relative path to the new file
+1. Luo uusi markdown-sivu haluttuun `src/fi/`-alikansioon
+2. Lisää linkki [src/fi/SUMMARY.md](src/fi/SUMMARY.md) -tiedostoon

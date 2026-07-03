@@ -1,0 +1,20 @@
+[book]
+authors = ["The Servo Project Developers"]
+language = "fi"
+src = "src/fi"
+title = "Servo-kirja"
+
+[output.html]
+git-repository-url = "https://github.com/Mikko-Huuskonen-Pro/Servo-kirja"
+edit-url-template = "https://github.com/Mikko-Huuskonen-Pro/Servo-kirja/edit/main/{path}"
+site-url = "/Servo-kirja/"
+additional-css = ["src/custom.css"]
+additional-js = ["src/mermaid.min.js", "src/mermaid-init.js"]
+
+[preprocessor]
+
+[preprocessor.mermaid]
+command = "mdbook-mermaid"
+
+[build]
+build-dir = "book-fi"
