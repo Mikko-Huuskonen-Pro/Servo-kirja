@@ -1,26 +1,36 @@
 # Based on <https://github.com/rust-lang/mdBook/wiki/Automated-Deployment:-GitHub-Actions/6cd0e9edbaf9f5b3ae495ece9d48f4145d001d14>
+# Finnish book deployment modeled on Mikko-Huuskonen-Pro/Kirja pages.yml
 
 name: Deploy
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # To push a branch 
-      pages: write  # To push to a GitHub Pages site
-      id-token: write  # To update the deployment status
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Generate link list
         run: |
-          for link in $(grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*[^\.]" src); do
-            echo "$link" | sed 's/\.$//' >> src/links.txt
+          for link in $(grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*[^\.]" src/fi); do
+            echo "$link" | sed 's/\.$//' >> src/fi/links.txt
           done
       - name: Configure PATH
         run: |
@@ -42,16 +52,17 @@ jobs:
         run: |
           curl 'https://raw.githubusercontent.com/servo/servo/refs/heads/main/components/config/prefs.rs' -O
           curl 'https://raw.githubusercontent.com/servo/servo/refs/heads/main/ports/servoshell/prefs.rs' -o servoshell_prefs.rs
-          python generate-features.py prefs.rs servoshell_prefs.rs >src/design-documentation/experimental-features.md
-      - name: Build book
+          python3 generate-features.py prefs.rs servoshell_prefs.rs fi >src/fi/design-documentation/experimental-features.md
+      - name: Build Finnish book
         run: |
+          cp book-fi.toml book.toml
           mdbook build
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'book'
+          path: book
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

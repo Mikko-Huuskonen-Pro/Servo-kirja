@@ -41,7 +41,10 @@ with open(sys.argv[1]) as f:
                     break
 
 
-template = """
+lang = sys.argv[3] if len(sys.argv) > 3 else "en"
+
+templates = {
+    "en": """
 # Experimental Web Platform Features
 
 This is a list of web platform features that have a partial implementation in Servo and are gated behind an optional preference.
@@ -66,7 +69,36 @@ However, they can still be disabled with an optional preference (e.g. `--pref do
 | Feature | Tracking issue | Preference |
 | ------- | -------------- | ---------- |
 {enabled-features}
-"""
+""",
+    "fi": """
+# Kokeelliset web-alustan ominaisuudet
+
+Tämä on luettelo web-alustan ominaisuuksista, joilla on osittainen toteutus Servossa ja jotka on rajattu valinnaisen pref-asetuksen taakse.
+
+Seuraavat ominaisuudet otetaan käyttöön [kokeellisella renderöintitilalla](https://servo.org/download/#:~:text=Enable%20experimental) tai `--enable-experimental-web-platform-features` -lipulla.
+
+| Ominaisuus | Seuranta-issue | Pref |
+| ---------- | -------------- | ---- |
+{experimental-features}
+
+Seuraavat ominaisuudet ovat oletuksena pois päältä, mutta ne voi kytkeä päälle komentorivillä (esim. `--pref dom_webgpu_enabled`).
+
+| Ominaisuus | Seuranta-issue | Pref |
+| ---------- | -------------- | ---- |
+{incomplete-features}
+
+# Käytössä olevat web-alustan ominaisuudet
+
+Tämä on luettelo web-alustan ominaisuuksista, joiden toteutus on riittävän valmis oletuskäyttöön.
+Ne voidaan silti poistaa käytöstä valinnaisella pref-asetuksella (esim. `--pref dom_webgpu_enabled=false`).
+
+| Ominaisuus | Seuranta-issue | Pref |
+| ---------- | -------------- | ---- |
+{enabled-features}
+""",
+}
+
+template = templates[lang]
 
 features = sorted(features, key=lambda feature: feature['name'])
 disabled = list(filter(lambda feature: not feature['enabled'], features))

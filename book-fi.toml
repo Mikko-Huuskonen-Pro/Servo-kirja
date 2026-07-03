@@ -17,4 +17,4 @@ additional-js = ["src/mermaid.min.js", "src/mermaid-init.js"]
 command = "mdbook-mermaid"
 
 [build]
-build-dir = "book-fi"
+build-dir = "book"

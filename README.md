@@ -3,6 +3,10 @@ Servo-kirja
 
 Epävirallinen suomenkielinen käännös [The Servo Book](https://book.servo.org) -teoksesta.
 
+**Julkaistu versio:** <https://mikko-huuskonen-pro.github.io/Servo-kirja/>
+
+Alkuperäinen englanninkielinen kirja: <https://book.servo.org>
+
 **<https://book.servo.org>** (englanninkielinen alkuperä)
 
 ## Suomenkielisen version rakentaminen
@@ -10,13 +14,13 @@ Epävirallinen suomenkielinen käännös [The Servo Book](https://book.servo.org
 ```sh
 $ cargo install mdbook --vers '^0.5' --locked
 $ cargo install mdbook-mermaid --vers '^0.17' --locked
-$ cp book-fi.toml book.toml && mdbook build -d book-fi && git checkout book.toml
+$ cp book-fi.toml book.toml && mdbook build && git checkout book.toml
 ```
 
 Tai Nixillä:
 
 ```sh
-$ nix-shell --run 'cp book-fi.toml book.toml && mdbook build -d book-fi'
+$ nix-shell --run 'cp book-fi.toml book.toml && mdbook build'
 ```
 
 ## Englanninkielinen versio
