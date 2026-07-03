@@ -1,6 +1,6 @@
 # Servo-kirja
 
-**[API-dokumentaatio](https://doc.servo.org/servo/)**
+**[API-dokumentaatio](https://doc.servo.org/servo/)** · **[Englanninkielinen alkuperä](https://book.servo.org)**
 
 ***
 
