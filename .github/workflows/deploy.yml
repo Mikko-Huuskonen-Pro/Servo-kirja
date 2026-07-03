@@ -29,6 +29,7 @@ jobs:
           fetch-depth: 0
       - name: Generate link list
         run: |
+          : > src/fi/links.txt
           for link in $(grep -Rin --include="*.md" -E -o "https?://[a-zA-Z0-9./?#=_%:-]*[^\.]" src/fi); do
             echo "$link" | sed 's/\.$//' >> src/fi/links.txt
           done
